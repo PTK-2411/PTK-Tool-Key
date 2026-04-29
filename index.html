@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lấy Key từ URL</title>
+  <title>Lấy Key</title>
 </head>
 <body>
 
 <h2 id="result">Đang kiểm tra key...</h2>
 
+<button id="copyBtn" style="display:none;">📋 Copy Key</button>
+
 <script>
-  // Lấy tham số từ URL
   const params = new URLSearchParams(window.location.search);
   const key = params.get("key");
 
-  // Hiển thị key
+  const result = document.getElementById("result");
+  const copyBtn = document.getElementById("copyBtn");
+
   if (key) {
-    document.getElementById("result").innerText = "Key của bạn là: " + key;
+    result.innerText = "Key của bạn là: " + key;
+    copyBtn.style.display = "inline-block";
   } else {
-    document.getElementById("result").innerText = "Không tìm thấy key!";
+    result.innerText = "Không tìm thấy key!";
   }
+
+  // Nút copy
+  copyBtn.addEventListener("click", function() {
+    navigator.clipboard.writeText(key).then(() => {
+      copyBtn.innerText = "✔ Đã copy!";
+      setTimeout(() => {
+        copyBtn.innerText = "📋 Copy Key";
+      }, 1500);
+    });
+  });
 </script>
 
 </body>
